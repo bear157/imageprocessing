@@ -7,9 +7,9 @@ public class ReadFile {
         
         
         try{
-            FileInputStream myInputFile = new FileInputStream("image/Imgpro.tif");
+            FileInputStream myInputFile = new FileInputStream("image/yoda.tif");
             
-            File f = new File("image/ImgproInfo.txt");
+            File f = new File("image/yodaInfo.txt");
             PrintWriter myOutputFile = new PrintWriter(new FileWriter(f,false));
             //int value;
             
@@ -158,11 +158,14 @@ public class ReadFile {
             int version;
             String strVersion = "";
 
-            
+            version = myInputFile.read();
+            strVersion += String.format("%02X", version);
+            version = myInputFile.read();
+            strVersion += String.format("%02X", version);
 		
-			strVersion = strVersion.replaceFirst("^0+(?!$)", ""); //remove leading zero regex lookahead
-			//System.out.println("Version: " + strVersion);
-			myOutputFile.println(String.format("%-15s", "Version") + ":" + strVersion); 
+            strVersion = strVersion.replaceFirst("^0+(?!$)", ""); //remove leading zero regex lookahead
+            //System.out.println("Version: " + strVersion);
+            myOutputFile.println(String.format("%-15s", "Version") + ":" + strVersion); 
             
             
             // offset
@@ -170,7 +173,7 @@ public class ReadFile {
             String strOffset = "";
             for (int i = 0; i < 4; i++) {
                 offset = myInputFile.read();
-                strOffset = String.format("%02X", offset) + strOffset;
+                strOffset += String.format("%02X", offset);
             }
             
             strOffset = strOffset.replaceFirst("^0+(?!$)", ""); //remove leading zero regex lookahead
@@ -184,7 +187,7 @@ public class ReadFile {
             numOfDE = myInputFile.read(); 
             strNumOfDE = String.format("%02X", numOfDE); 
             numOfDE = myInputFile.read(); 
-            strNumOfDE = String.format("%02X", numOfDE) + strNumOfDE; 
+            strNumOfDE += String.format("%02X", numOfDE); 
             
             numOfDE = Integer.parseInt(strNumOfDE, 16);
             //System.out.println("Number of DE: " + numOfDE);
@@ -198,9 +201,9 @@ public class ReadFile {
                 String strTag = "";
                 
                 tag = myInputFile.read(); 
-                strTag = String.format("%02X", tag) + strTag;
+                strTag += String.format("%02X", tag);
                 tag = myInputFile.read(); 
-                strTag = String.format("%02X", tag) + strTag; 
+                strTag += String.format("%02X", tag); 
                 
                 // DE type 
                 int type;
@@ -262,14 +265,14 @@ public class ReadFile {
     	int stripOffset = 0;
     	
     	for(int i = 0; i < numOfDE; i++){
-	    	String strTag = arrDE[i][0]; 
-	    	int tag = Integer.parseInt(strTag, 16);
-	    	if(tag == 273) {
-	    		String strStripOffset = arrDE[i][3]; 
-	    		stripOffset = Integer.parseInt(strStripOffset, 16); 
-	    		break;
-	    	}
-	    }//--- end for ---//
+            String strTag = arrDE[i][0]; 
+            int tag = Integer.parseInt(strTag, 16);
+            if(tag == 273) {
+                String strStripOffset = arrDE[i][3]; 
+                stripOffset = Integer.parseInt(strStripOffset, 16); 
+                break;
+            }
+        }//--- end for ---//
 	    
 	    /** 
 	     * minus the other bytes that has been read 
@@ -280,8 +283,8 @@ public class ReadFile {
 	    stripOffset = stripOffset - (12 * numOfDE) - 8 - 2;
 	    try{
 	    	for(int i = 0; i < stripOffset; i++){
-		    	myInputFile.read(); 
-		    }
+                    myInputFile.read(); 
+                }
 	    }catch(IOException ex) {
 	    	System.out.println("File input error");
 	    }
@@ -301,40 +304,40 @@ public class ReadFile {
                     // process de tag
                     String strTag = arrDE[i][0].replaceFirst("^0+(?!$)", ""); //remove leading zero 
                     switch (Integer.parseInt(strTag, 16)) {
-                                case 254: strTag = strTag + " (New Subfile Type)"; break;
-                                case 256: strTag = strTag + " (Image Width)"; break;
-                                case 257: strTag = strTag + " (Image Length)"; break;
-                                case 258: strTag = strTag + " (Bits Per Sample)"; break;
-                                case 259: strTag = strTag + " (Compression)"; break;
-                                case 262: strTag = strTag + " (Photometric Interpretation)"; break;
-                                case 273: strTag = strTag + " (Strip Offsets)"; break;
-                                case 277: strTag = strTag + " (Samples Per Pixel)"; break;
-                                case 278: strTag = strTag + " (Rows Per Strip)"; break;
-                                case 279: strTag = strTag + " (Strip Byte Counts)"; break;
-                                case 282: strTag = strTag + " (X Resolution)"; break;
-                                case 283: strTag = strTag + " (Y Resolution)"; break;
-                                case 296: strTag = strTag + " (Resolution Unit)"; break;
-                                default : continue loopDE;
-                            }//--- end switch ---//
+                        case 254: strTag = strTag + " (New Subfile Type)"; break;
+                        case 256: strTag = strTag + " (Image Width)"; break;
+                        case 257: strTag = strTag + " (Image Length)"; break;
+                        case 258: strTag = strTag + " (Bits Per Sample)"; break;
+                        case 259: strTag = strTag + " (Compression)"; break;
+                        case 262: strTag = strTag + " (Photometric Interpretation)"; break;
+                        case 273: strTag = strTag + " (Strip Offsets)"; break;
+                        case 277: strTag = strTag + " (Samples Per Pixel)"; break;
+                        case 278: strTag = strTag + " (Rows Per Strip)"; break;
+                        case 279: strTag = strTag + " (Strip Byte Counts)"; break;
+                        case 282: strTag = strTag + " (X Resolution)"; break;
+                        case 283: strTag = strTag + " (Y Resolution)"; break;
+                        case 296: strTag = strTag + " (Resolution Unit)"; break;
+                        default : continue loopDE;
+                    }//--- end switch ---//
 
 
                     // process de type
                     String strType = arrDE[i][1].replaceFirst("^0+(?!$)", ""); //remove leading zero
                     switch (Integer.parseInt(strType, 16)) {
-                                case 1: strType = strType + " (BYTE)"; break;
-                                case 2: strType = strType + " (ASCII)"; break;
-                                case 3: strType = strType + " (SHORT)"; break;
-                                case 4: strType = strType + " (LONG)"; break;
-                                case 5: strType = strType + " (RATIONAL)"; break;
-                                case 6: strType = strType + " (SBYTE)"; break;
-                                case 7: strType = strType + " (UNDEFINE)"; break;
-                                case 8: strType = strType + " (SSHORT)"; break;
-                                case 9: strType = strType + " (SLONG)"; break;
-                                case 10: strType = strType + " (SRATIONAL)"; break;
-                                case 11: strType = strType + " (FLOAT)"; break;
-                                case 12: strType = strType + " (DOUBLE)"; break;
-                                default : strType = strType; break;
-                            }
+                        case 1: strType = strType + " (BYTE)"; break;
+                        case 2: strType = strType + " (ASCII)"; break;
+                        case 3: strType = strType + " (SHORT)"; break;
+                        case 4: strType = strType + " (LONG)"; break;
+                        case 5: strType = strType + " (RATIONAL)"; break;
+                        case 6: strType = strType + " (SBYTE)"; break;
+                        case 7: strType = strType + " (UNDEFINE)"; break;
+                        case 8: strType = strType + " (SSHORT)"; break;
+                        case 9: strType = strType + " (SLONG)"; break;
+                        case 10: strType = strType + " (SRATIONAL)"; break;
+                        case 11: strType = strType + " (FLOAT)"; break;
+                        case 12: strType = strType + " (DOUBLE)"; break;
+                        default : strType = strType; break;
+                    }
 
                             // process de length & value
                             int length = Integer.parseInt(arrDE[i][2], 16);
@@ -349,11 +352,10 @@ public class ReadFile {
                 myOutputFile.println();
 
                 int rowItem = 0; // each row should contain 16 bytes of data
-                int countItem = 0; // more spacing every 8 bytes of data
-                while(true) {
-                    int imageData = myInputFile.read();
-                    if(imageData == -1) break; // break looping if reach end of data
-
+                int countItem = 0; // more spacing every 8 bytes of data 
+                int imageData;
+                while((imageData = myInputFile.read()) != -1) {
+                   
                     myOutputFile.printf("%02X ", imageData);
                     rowItem++; countItem++;
 
@@ -375,7 +377,7 @@ public class ReadFile {
     
     public static String prefixSuffix(String targetText, String prefixText, String suffixText, int length) {
     	if(prefixText.equals("")) {
-    		prefixText = " ";
+            prefixText = " ";
     	}
     	if(suffixText.equals("")) {
     		suffixText = prefixText; 
