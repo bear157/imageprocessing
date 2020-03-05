@@ -31,6 +31,8 @@ public class ReadFile {
             
             if(strByteOrder.equalsIgnoreCase("4949")){
                 isLSB(myInputFile, myOutputFile); 
+            }else{
+                isMSB(myInputFile, myOutputFile);
             }
             
             
@@ -185,7 +187,7 @@ public class ReadFile {
             String strNumOfDE = "";
             
             numOfDE = myInputFile.read(); 
-            strNumOfDE = String.format("%02X", numOfDE); 
+            strNumOfDE += String.format("%02X", numOfDE); 
             numOfDE = myInputFile.read(); 
             strNumOfDE += String.format("%02X", numOfDE); 
             
@@ -210,9 +212,9 @@ public class ReadFile {
                 String strType = "";
                 
                 type = myInputFile.read(); 
-                strType = String.format("%02X", type) + strType;
+                strType += String.format("%02X", type);
                 type = myInputFile.read(); 
-                strType = String.format("%02X", type) + strType; 
+                strType += String.format("%02X", type);  
                 
                 // DE length
                 int length;
@@ -220,7 +222,7 @@ public class ReadFile {
 
                 for (int j = 0; j < 4; j++) {
                     length = myInputFile.read();
-                    strLength = String.format("%02X", length) + strLength;
+                    strLength += String.format("%02X", length);
                 }
                 
                 // DE value
@@ -229,7 +231,7 @@ public class ReadFile {
                 
                 for (int j = 0; j < 4; j++) {
                     value = myInputFile.read();
-                    strValue = String.format("%02X", value) + strValue;
+                    strValue += String.format("%02X", value);
                 }
                 
                 /*
