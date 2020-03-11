@@ -1,5 +1,10 @@
 import java.io.*;
 
+/**
+ * Fundamental of Image Processing 
+ * Assignment 1
+ * @author jx
+ */
 public class ReadFile {
     
         

@@ -91,7 +91,7 @@ public class Patterning {
         arrOutput = new int[height][width];
         
         try{
-            FileInputStream myInputFile = new FileInputStream("image/Imgpro.raw");
+            FileInputStream myInputFile = new FileInputStream("image/Picture.raw");
             
             int rawData;
             //System.out.println(rawData);
@@ -138,25 +138,19 @@ public class Patterning {
     public static void save() {
         
         try{
-            File f = new File("image/Imgpro_patterning.raw");
+            File f = new File("image/Picture_patterning.raw");
             //PrintWriter myOutputFile = new PrintWriter(new FileWriter(f,false));
             FileOutputStream myOutputFile = new FileOutputStream(f, false);
             
-            for (int h = 0; h < arrOutput.length; h++) {
+            for (int h = 0; h < height; h++) {
                 for (int p = 0; p < 3; p++) {
-                    int count = 0;
-                    for (int w = 0; w < arrOutput[h].length; w++) {
-                        count+=3;
-                        //System.out.println(w);
+                    for (int w = 0; w < width; w++) {
                         int pattern = arrOutput[h][w];
                         myOutputFile.write(arrPattern[pattern][p][0]);
                         myOutputFile.write(arrPattern[pattern][p][1]);
                         myOutputFile.write(arrPattern[pattern][p][2]);
                     }//--- end loop width ---//
-                    //System.out.println(count);
-                    
-                }//--- end loop pattern row ---//
-                
+                }//--- end loop pattern row ---//  
             }//--- end loop height ---//
             
             myOutputFile.close();
