@@ -1,11 +1,18 @@
 import java.io.*;
 import java.util.*;
+import javax.swing.*;
 
+/**
+ * Fundamental of Image Processing 
+ * Patterning
+ * Assignment 2
+ * @author jx
+ */
 public class Patterning {
     static int width;
     static int height;
     
-    static int[][][] arrPattern = {
+    final static int[][][] arrPattern = {
         //pattern 0
         {
             {0,0,0},
@@ -72,12 +79,10 @@ public class Patterning {
     
     
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
         
-        System.out.print("Enter image width: ");
-        width = input.nextInt(); 
-        System.out.print("Enter image height: ");
-        height = input.nextInt(); 
+        
+        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width?"));
+        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height?"));
         
         System.out.println("width: " + width);
         System.out.println("height: " + height);
@@ -105,6 +110,7 @@ public class Patterning {
             if(myInputFile.read() == -1){
                 //save output file 
                 save();
+                //System.out.println("arrOutput height: " + arrOutput.length);
             }else{
                 System.out.println("Error in width or length");
             }
@@ -130,23 +136,25 @@ public class Patterning {
     
     
     public static void save() {
-        System.out.println(arrPattern[6][0][0]);
-        System.out.println(arrPattern[6][0][1]);
-        System.out.println(arrPattern[6][0][2]);
         
         try{
             File f = new File("image/Imgpro_patterning.raw");
-            PrintWriter myOutputFile = new PrintWriter(new FileWriter(f,false));
+            //PrintWriter myOutputFile = new PrintWriter(new FileWriter(f,false));
+            FileOutputStream myOutputFile = new FileOutputStream(f, false);
             
-            for (int h = 0; h < height; h++) {
+            for (int h = 0; h < arrOutput.length; h++) {
                 for (int p = 0; p < 3; p++) {
-                    for (int w = 0; w < width; w++) {
+                    int count = 0;
+                    for (int w = 0; w < arrOutput[h].length; w++) {
+                        count+=3;
+                        //System.out.println(w);
                         int pattern = arrOutput[h][w];
-                        myOutputFile.write(String.format("%02X", arrPattern[pattern][p][0]));
-                        myOutputFile.write(String.format("%02X", arrPattern[pattern][p][1]));
-                        myOutputFile.write(String.format("%02X", arrPattern[pattern][p][2]));
-                        
+                        myOutputFile.write(arrPattern[pattern][p][0]);
+                        myOutputFile.write(arrPattern[pattern][p][1]);
+                        myOutputFile.write(arrPattern[pattern][p][2]);
                     }//--- end loop width ---//
+                    //System.out.println(count);
+                    
                 }//--- end loop pattern row ---//
                 
             }//--- end loop height ---//
