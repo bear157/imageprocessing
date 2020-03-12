@@ -1,0 +1,7 @@
+chess-300X400
+yoda-123X62
+imgpro-122X100
+bedroom-600X600
+picture-500X500
+planet-400x300
+shape-400x400
