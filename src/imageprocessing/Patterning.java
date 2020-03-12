@@ -154,6 +154,7 @@ public class Patterning {
             }//--- end loop height ---//
             
             myOutputFile.close();
+            System.out.println("Patterning is done.");
         }catch(IOException ex) {
             System.out.println("File output error.");
         }

@@ -20,7 +20,7 @@ public class Dithering {
     static int height;
     static int[][] arrOutput;
     static String mode;
-    final static String fileName = "Picture";
+    final static String fileName = "yoda";
     
     final static int[][] d1 = {
         {0,128},
@@ -140,6 +140,7 @@ public class Dithering {
             }//--- end loop height ---//
 
             myOutputFile.close();
+            System.out.println("Dithering (" + mode + ") is done.");
         } catch (IOException ex) {
             System.out.println("File output error.");
         }
