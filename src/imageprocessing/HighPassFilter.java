@@ -9,22 +9,17 @@ import java.io.*;
  * Assignment 4
  * @author jx
  */
-public class Convolution {
+public class HighPassFilter {
     
     static int width;
     static int height;
-    final static String fileName = "yoda";
+    final static String fileName = "bedroom";
     
     final static int[][] kernel = {
-        {-1,0,1},
-        {-2,0,2},
-        {-1,0,1}
-//        {1,1,1},
-//        {1,1,1},
-//        {1,1,1}
-//        {-1,-1,-1},
-//        {-1,8,-1},
-//        {-1,-1,-1}
+
+        {-1,-1,-1},
+        {-1,8,-1},
+        {-1,-1,-1}
     };
     
     static int[][] arrImageData;
@@ -110,11 +105,12 @@ public class Convolution {
                     }//--- end loop kernel width ---//
                 }//--- end loop kernel length ---//
                 
-                if(sum < 0)
-                    sum = 0;
-                if(sum > 255)
+//                sum = sum / (int) Math.pow(kernel.length, 2);
+                if (sum < 0) 
+                    sum = 0; 
+                if (sum > 255)
                     sum = 255;
-//                System.out.println("Actual sum: " + sum);
+                
                 arrOutput[h][w] = sum ;
             }//--- end loop width ---//
         }//--- end loop height ---//
@@ -122,7 +118,7 @@ public class Convolution {
     
     public static void save() {
         try {
-            File f = new File("image/" + fileName + "_convolution.raw");
+            File f = new File("image/" + fileName + "_highpass.raw");
             FileOutputStream myOutputFile = new FileOutputStream(f, false);
 
             for (int h = 0; h < height; h++) {
@@ -132,7 +128,7 @@ public class Convolution {
             }//--- end loop height ---//
 
             myOutputFile.close();
-            System.out.println("Convolution is done.");
+            System.out.println("High pass filter is done.");
         } catch (IOException ex) {
             System.out.println("File output error.");
         }

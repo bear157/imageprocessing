@@ -24,8 +24,8 @@ public class HistogramEqualization {
     
     public static void main(String[] args) {
         // get width and height of image
-        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width?"));
-        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height?"));
+        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width? (Image: "+fileName+")"));
+        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height? (Image: "+fileName+")"));
 
         System.out.println("Width: " + width);
         System.out.println("Height: " + height);

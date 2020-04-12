@@ -76,22 +76,20 @@ public class Patterning {
     };
     
     static int[][] arrOutput;
-    
+    static String fileName = "Picture";
     
     public static void main(String[] args) {
         
         
-        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width?"));
-        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height?"));
+        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width? (Image: "+fileName+")"));
+        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height? (Image: "+fileName+")"));
         
-        System.out.println("width: " + width);
-        System.out.println("height: " + height);
         
         //store the pattern number
         arrOutput = new int[height][width];
         
         try{
-            FileInputStream myInputFile = new FileInputStream("image/Picture.raw");
+            FileInputStream myInputFile = new FileInputStream("image/"+fileName+".raw");
             
             int rawData;
             //System.out.println(rawData);
@@ -138,7 +136,7 @@ public class Patterning {
     public static void save() {
         
         try{
-            File f = new File("image/Picture_patterning.raw");
+            File f = new File("image/"+fileName+"_patterning.raw");
             //PrintWriter myOutputFile = new PrintWriter(new FileWriter(f,false));
             FileOutputStream myOutputFile = new FileOutputStream(f, false);
             

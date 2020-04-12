@@ -38,8 +38,8 @@ public class Dithering {
     
     public static void main(String[] args) {
         // get width and height of image
-        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width?"));
-        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height?"));
+        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width? (Image: "+fileName+")"));
+        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height? (Image: "+fileName+")"));
         
         System.out.println("width: " + width);
         System.out.println("height: " + height);

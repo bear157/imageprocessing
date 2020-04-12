@@ -12,7 +12,7 @@ public class ReadFile {
         
         
         try{
-            FileInputStream myInputFile = new FileInputStream("image/yoda.tif");
+            FileInputStream myInputFile = new FileInputStream("image/test.tif");
             
             File f = new File("image/yodaInfo.txt");
             PrintWriter myOutputFile = new PrintWriter(new FileWriter(f,false));
