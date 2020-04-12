@@ -5,6 +5,7 @@
  */
 package imageprocessing;
 
+import java.awt.Font;
 import javax.swing.*;
 import java.io.*;
 
@@ -37,6 +38,8 @@ public class Dithering {
     
     
     public static void main(String[] args) {
+        setUIFont (new javax.swing.plaf.FontUIResource("Arial",Font.PLAIN,20));
+        
         // get width and height of image
         width = Integer.parseInt(JOptionPane.showInputDialog("Enter width? (Image: "+fileName+")"));
         height = Integer.parseInt(JOptionPane.showInputDialog("Enter height? (Image: "+fileName+")"));
@@ -146,4 +149,15 @@ public class Dithering {
         }
 
     }//--- end save() ---//
+    
+    private static void setUIFont(javax.swing.plaf.FontUIResource f) {
+        java.util.Enumeration keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if (value instanceof javax.swing.plaf.FontUIResource) {
+                UIManager.put(key, f);
+            }
+        }
+    }
 }
