@@ -13,7 +13,7 @@ import java.io.*;
  * Fundamental of Image Processing 
  * Dithering
  * Assignment 2
- * @author jx
+ * @author Yee Jian Xiong (B180237C)
  */
 public class Dithering {
     
@@ -21,7 +21,7 @@ public class Dithering {
     static int height;
     static int[][] arrOutput;
     static String mode;
-    final static String fileName = "yoda";
+    static String fileName;
     
     final static int[][] d1 = {
         {0,128},
@@ -40,12 +40,14 @@ public class Dithering {
     public static void main(String[] args) {
         setUIFont (new javax.swing.plaf.FontUIResource("Arial",Font.PLAIN,20));
         
-        // get width and height of image
-        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width? (Image: "+fileName+")"));
-        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height? (Image: "+fileName+")"));
+        // get filename, width and height of image
+        fileName = JOptionPane.showInputDialog("Enter image name? ('.raw' is not required)");
+        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width?"));
+        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height?"));
         
-        System.out.println("width: " + width);
-        System.out.println("height: " + height);
+        System.out.println("Image name: " + fileName + ".raw");
+        System.out.println("Width: " + width);
+        System.out.println("Height: " + height);
         
         arrOutput = new int[height][width];
         
@@ -79,6 +81,7 @@ public class Dithering {
             
             if (myInputFile.read() != -1) {
                 System.out.println("Error in width or length");
+                JOptionPane.showMessageDialog(null, "Error in width or length");
                 valid = false;
             }
             
@@ -86,6 +89,8 @@ public class Dithering {
             myInputFile.close();
         } catch (IOException ex) {
             System.out.println("File read error");
+            JOptionPane.showMessageDialog(null, "File read error.");
+            return false;
         }
         
         return valid;
@@ -94,7 +99,7 @@ public class Dithering {
     public static void doDithering() {
         //user input to choose D1 or D2
         do {
-            mode = JOptionPane.showInputDialog("D1 or D2?");
+            mode = JOptionPane.showInputDialog("D1 or D2? \n** D1 : 2x2 dither matrix \n** D2 : 4x4 dither matrix");
         } while (!mode.equalsIgnoreCase("D1") && !mode.equalsIgnoreCase("D2"));
         
         int[][] matrix = null;
@@ -143,9 +148,11 @@ public class Dithering {
             }//--- end loop height ---//
 
             myOutputFile.close();
-            System.out.println("Dithering (" + mode + ") is done.");
+            System.out.println("Dithering (" + mode + ") is done. \nOutput: "+fileName+"_"+mode.toLowerCase()+".raw");
+            JOptionPane.showMessageDialog(null, "Dithering (" + mode + ") is done. \nOutput: "+fileName+"_"+mode.toLowerCase()+".raw");
         } catch (IOException ex) {
             System.out.println("File output error.");
+            JOptionPane.showMessageDialog(null, "File output error.");
         }
 
     }//--- end save() ---//

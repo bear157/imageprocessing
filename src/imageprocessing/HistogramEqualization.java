@@ -6,16 +6,16 @@ import java.io.*;
 
 /**
  * Fundamental of Image Processing 
- * Dithering
+ * Histogram Equalization
  * Assignment 3
- * @author jx
+ * @author Yee Jian Xiong (B180237C)
  */
 public class HistogramEqualization {
     
     static int width;
     static int height;
     static int[][] arrOutput;
-    final static String fileName = "yoda";
+    static String fileName;
     final static double imageBits = 8; // 8-bits image
     final static int level = (int) Math.pow(2, imageBits);
     
@@ -26,10 +26,12 @@ public class HistogramEqualization {
     public static void main(String[] args) {
         setUIFont (new javax.swing.plaf.FontUIResource("Arial",Font.PLAIN,20));
         
-        // get width and height of image
-        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width? (Image: "+fileName+")"));
-        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height? (Image: "+fileName+")"));
-
+        // get filename, width and height of image
+        fileName = JOptionPane.showInputDialog("Enter image name? ('.raw' is not required)");
+        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width?"));
+        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height?"));
+        
+        System.out.println("Image name: " + fileName + ".raw");
         System.out.println("Width: " + width);
         System.out.println("Height: " + height);
         
@@ -69,12 +71,15 @@ public class HistogramEqualization {
             
             if (myInputFile.read() != -1) {
                 System.out.println("Error in width or length");
+                JOptionPane.showMessageDialog(null, "Error in width or length");
                 valid = false;
             }
             
             myInputFile.close();
         } catch (IOException ex) {
             System.out.println("File read error");
+            JOptionPane.showMessageDialog(null, "File read error.");
+            return false;
         }
         
         return valid;
@@ -112,9 +117,11 @@ public class HistogramEqualization {
             }//--- end loop height ---//
 
             myOutputFile.close();
-            System.out.println("Histogram equalization is done.");
+            System.out.println("Histogram equalization is done. \nOutput: " + fileName + "_HE.raw");
+            JOptionPane.showMessageDialog(null, "Histogram equalization is done. \nOutput: " + fileName + "_HE.raw");
         } catch (IOException ex) {
             System.out.println("File output error.");
+            JOptionPane.showMessageDialog(null, "File output error.");
         }
     }//--- end save() ---//
     

@@ -1,3 +1,5 @@
+package imageprocessing;
+
 import java.awt.Font;
 import java.io.*;
 import java.util.*;
@@ -7,7 +9,7 @@ import javax.swing.*;
  * Fundamental of Image Processing 
  * Patterning
  * Assignment 2
- * @author jx
+ * @author Yee Jian Xiong (B180237C)
  */
 public class Patterning {
     static int width;
@@ -77,13 +79,19 @@ public class Patterning {
     };
     
     static int[][] arrOutput;
-    static String fileName = "yoda";
+    static String fileName;
     
     public static void main(String[] args) {
         setUIFont (new javax.swing.plaf.FontUIResource("Arial",Font.PLAIN,20));
         
-        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width? (Image: "+fileName+")"));
-        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height? (Image: "+fileName+")"));
+        // get filename, width and height of image
+        fileName = JOptionPane.showInputDialog("Enter image name? ('.raw' is not required)");
+        width = Integer.parseInt(JOptionPane.showInputDialog("Enter width?"));
+        height = Integer.parseInt(JOptionPane.showInputDialog("Enter height?"));
+        
+        System.out.println("Image name: " + fileName + ".raw");
+        System.out.println("Width: " + width);
+        System.out.println("Height: " + height);
         
         
         //store the pattern number
@@ -112,11 +120,13 @@ public class Patterning {
                 //System.out.println("arrOutput height: " + arrOutput.length);
             }else{
                 System.out.println("Error in width or length");
+                JOptionPane.showMessageDialog(null, "Error in width or length");
             }
             
             myInputFile.close();
         }catch(IOException ex){
             System.out.println("File input error");
+            JOptionPane.showMessageDialog(null, "File read error.");    
         }
     }//--- end main() ---//
     
@@ -153,9 +163,11 @@ public class Patterning {
             }//--- end loop height ---//
             
             myOutputFile.close();
-            System.out.println("Patterning is done.");
+            System.out.println("Patterning is done. \nOutput: " + fileName + "_patterning.raw");
+            JOptionPane.showMessageDialog(null, "Patterning is done. \nOutput: " + fileName + "_patterning.raw");
         }catch(IOException ex) {
             System.out.println("File output error.");
+            JOptionPane.showMessageDialog(null, "File output error.");
         }
         
     }//--- end save() ---//

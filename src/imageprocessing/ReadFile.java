@@ -3,7 +3,7 @@ import java.io.*;
 /**
  * Fundamental of Image Processing 
  * Assignment 1
- * @author jx
+ * @author Yee Jian Xiong (B180237C)
  */
 public class ReadFile {
     
@@ -12,7 +12,7 @@ public class ReadFile {
         
         
         try{
-            FileInputStream myInputFile = new FileInputStream("image/test.tif");
+            FileInputStream myInputFile = new FileInputStream("image/yoda.tif");
             
             File f = new File("image/yodaInfo.txt");
             PrintWriter myOutputFile = new PrintWriter(new FileWriter(f,false));
@@ -375,7 +375,8 @@ public class ReadFile {
                         countItem = 0;
                 }
             } //--- end while loop ---//
-		    
+            
+            System.out.println("File read success. \nOutput: yodaInfo.txt");
     	}catch(IOException ex) {
             System.out.println("File error"); 
     	}
